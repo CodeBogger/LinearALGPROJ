@@ -26,11 +26,11 @@ def RREF(list):
 
     while True:
         # check if the matrix is in RREF
-
-        print("in da while loop")
         if list[column_focus][row_focus] != 0:
 
             if column_focus == row_focus:
+
+                print(f'Now dividing everything in row {row_focus+1} by {list[column_focus][row_focus]:.2f} to achieve the diagnol one RREF form.')
                 for i in range(0, len(list)):
 
                     # diagnol position case
@@ -98,6 +98,7 @@ def RREF(list):
                     # gets the multiplier of current / divisor to apply standard subtraction row operation multiplier*list[i]["row of where the suitable number was found"]
                     multiplier = current / divisor
 
+                    print(f'R{row_focus+1} -> R{row_focus+1} - {multiplier:.2f}R{row+1}')
                     for i in range(0, len(list)):
                         list[i][row_focus] -= multiplier * list[i][row]
                 
@@ -118,13 +119,13 @@ def RREF(list):
 
                 # check if last row is finally traversed over, if so, the system is consistent
 
-                if column_focus == len(list):
+                if column_focus == len(list)-1:
                     print('The system is consistent')
                     return True
             
-                row_focus = len(list[column_focus]) - 1
-        
+                row_focus = len(list[column_focus])
         row_focus -= 1
+    
         
         
 
