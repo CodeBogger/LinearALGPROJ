@@ -1,6 +1,14 @@
 import logic
+import random
 
-test = [[3.0, 2.0, 6.0], [9.0, 3.0, 5.0], [3.0, 6.0, 1.0], [3.0, 2.0, 1.0]]
+test = []
+col_size = random.randint(3,6)
+
+for i in range(4):
+    col = []
+    for j in range(col_size):
+        col.append(random.randint(0,9))
+    test.append(col)
 
 logic.RREF(test)
 print(test)

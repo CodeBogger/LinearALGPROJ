@@ -26,6 +26,8 @@ def RREF(list):
 
     while True:
         # check if the matrix is in RREF
+
+        print('Current Matrix: ',list)
         if list[column_focus][row_focus] != 0:
 
             if column_focus == row_focus:
@@ -42,11 +44,15 @@ def RREF(list):
                     # each j represents the jth index in each individual array that represents a column vector
                     # loop thru each column vector
 
+                    # if the diagnol pos is already 1, skip
+                    if j < len(list) and list[j][j] == 1:
+                        break
+
                     row = []
 
                     for i in range(0, len(list)):
                         row.append(list[i][j])
-                
+
                     gcd = max(row)
                     while gcd > 0:
             
@@ -74,8 +80,11 @@ def RREF(list):
                 row = 0
 
                 for j in range(0, len(list[column_focus])):
+                    
+                    if j < 0:
+                        print('J IS LESS THAN 0 WTF')
 
-                    if j == row_focus or list[column_focus][j] == 0:
+                    if j == row_focus or list[column_focus][j] == 0 or j < column_focus:
                         continue
                 
                     temp = decimal_count(current, list[column_focus][j])
@@ -100,16 +109,23 @@ def RREF(list):
 
                     print(f'R{row_focus+1} -> R{row_focus+1} - {multiplier:.2f}R{row+1}')
                     for i in range(0, len(list)):
+                        print(f'I: {i}, J: {row_focus}, Changed {list[i][row_focus]:.2f} to ', end='')
                         list[i][row_focus] -= multiplier * list[i][row]
+                        print(f'{list[i][row_focus]:.2f}')
                 
             
             # check if the row became inconsistent, determine if its infinite sol or not
-            if valid_row(row_focus, list) == False:
+            if valid_row(row_focus, list) == False or len(list) > len(list[0]):
                 
                 if list[len(list)-1][row_focus] == 0:
-                    print(f'Infinite solutions for row {row_focus+1}!')
+                    print(f'Infinite solutions for row {row_focus}!')
+                elif list[len(list)-1][row_focus] != 0:
+                    print(f'Inconsistent solution! {list[len(list)-1][row_focus]} is not equal to 0!')
                 else:
-                    print(f'Inconsistent solution! {list[len(list)-1][row_focus]} != 0!')
+                    print('There are more columns than rows, so there are infinite solutions!')
+
+                    for i in range(len(list[0]) - len(list)):
+                        print(f'Free variable x{len(list)+i+1}')
 
                 return False
                 
